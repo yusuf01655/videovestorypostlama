@@ -1,0 +1,17 @@
+let Hesaplar = class{
+    
+    constructor(hesapId,eposta,sifre, yetkiId ){
+        this.eposta = eposta;
+        this.sifre = sifre;
+        this.hesapId = hesapId;
+        this.yetkiId = yetkiId;
+    }
+
+    get getHesapId(){
+        return this.hesapId;
+    }
+    set setHesapId(hesapId){
+        this.hesapId = hesapId;
+    }
+
+}
