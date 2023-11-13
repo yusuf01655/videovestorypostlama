@@ -1,6 +1,10 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const app = express();
+app.use(cors());
+const mediaRoutes = require("./routes/media");
+app.use("/api/v1/media/",mediaRoutes);
 
 const mongoDbUri = "mongodb://localhost:27017/videovestorypostlama";
 mongoose.connect(mongoDbUri,{useNewUrlParser:true,});
