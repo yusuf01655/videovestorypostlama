@@ -10,9 +10,7 @@ function App() {
         <div 
           className="card" 
           style={{height: "auto", width: "800px", margin: "40px", border: "1px solid black",}}>
-            <div className="card-body">
-              <UploadForm getAllMedias={getAllMedias} />
-            </div>
+            <div className="card-body"><UploadForm/></div>
           </div>
       </div>
 
@@ -20,9 +18,7 @@ function App() {
         <div 
           className="card" 
           style={{height: "auto", width: "800px", margin: "40px", border: "1px solid black",}}>
-            <div className="card-body">
-              <UploadsList medias={medias} />
-            </div>
+            <div className="card-body"><UploadsList/></div>
           </div>
       </div>
 
