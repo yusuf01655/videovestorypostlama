@@ -1,7 +1,8 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
-
-function App() {
+import UploadForm from './components/UploadForm';
+import UploadsList from './components/UploadsList';
+const App = () => {
   return (
   <>
     <div className="row">
