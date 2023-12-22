@@ -1,6 +1,8 @@
 const express = require('express');
 const appp = express();
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const morgan = require('morgan');
 
 ///veritabanina baglan
 const mongoDbUri = "mongodb://localhost:27017/videovestorypostlama";
@@ -16,8 +18,10 @@ mongoose.connection.on("error",(err) => {
 //route lari import et
 const userRoutes = require('./routes/user');
 
-
 //middleware
+appp.use(morgan('dev'));
+appp.use(bodyParser.json())
+//routes middleware
 appp.use("/api",userRoutes);
 
 
