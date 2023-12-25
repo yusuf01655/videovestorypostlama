@@ -26,3 +26,41 @@ exports.kaydol = async (req, res, next) => {
         })
     }
 }
+exports.girisYap = async (req, res, next) => {
+   try{
+        const {email,password} = req.body;
+        if(!email || !password){
+            return res.status(400).json({
+                success: false,
+                message: "eposta ya da sifre yanlis...",
+            })
+        }
+        //kullanici eposta kontrolu
+        const user = await User.findOne({email});
+        if(!user){
+            return res.status(400).json({
+                success: false,
+                message: "gecersiz eposta",
+            })
+        }
+        //eslesip eslesmemesiyle ilgili olarak sifreyi dogrula 
+        const isMatched = await user.comparePassword(password);
+        if(!isMatched){
+            return res.status(400).json({
+                success: false,
+                message: "gecersiz sifre ",
+            })
+        }
+        res.status(200).json({
+            success: true,
+            user 
+        })
+
+   }catch(error){
+        console.log(error);
+        return res.status(400).json({
+            success: false,
+            message: "giris yapilmadi. bilgilerinizi kontrol ediniz.",
+        })
+   }
+}
