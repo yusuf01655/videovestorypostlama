@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const bcrypt = require('bcryptjs');
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
     trim: true,
     required: [true, 'lutfen sifre giriniz'],
     minlength: [6,'sifre en az altı (6) karakter olmali' ],
-    unique: true,
+   
  /*    match: [
       /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
       'gecerli bir email giriniz'
@@ -51,5 +51,12 @@ const userSchema = new mongoose.Schema({
 }, {timestamps: true});
 
 //const User = 
+//kaydetmeden once sifrele
+userSchema.pre('save',async function(next){
+  if(!this.isModified('password')){
+    next()
+  }
+  this.password = await bcrypt.hash(this.password,10);
 
+});
 module.exports = mongoose.model('User', userSchema);
