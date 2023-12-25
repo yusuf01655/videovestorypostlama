@@ -51,9 +51,11 @@ exports.girisYap = async (req, res, next) => {
                 message: "gecersiz sifre ",
             })
         }
+        const token = await user.jwtGenerateToken();
+
         res.status(200).json({
             success: true,
-            user 
+            token
         })
 
    }catch(error){
