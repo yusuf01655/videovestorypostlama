@@ -51,13 +51,10 @@ exports.girisYap = async (req, res, next) => {
                 message: "gecersiz sifre ",
             })
         }
-        const token = await user.jwtGenerateToken();
+        
 
-        res.status(200).json({
-            success: true,
-            token
-        })
-
+        
+        generateToken(user, 200, res);
    }catch(error){
         console.log(error);
         return res.status(400).json({
@@ -65,4 +62,12 @@ exports.girisYap = async (req, res, next) => {
             message: "giris yapilmadi. bilgilerinizi kontrol ediniz.",
         })
    }
+}
+const generateToken = async (user, statusCode, res) => {
+    const token = await user.jwtGenerateToken();
+    const options = {
+        httpOnly: true,
+        expires: new Date(Date.now() + 1*60*60*1000)
+    };
+    res.status(statusCode).cookie('token', token, options).json({success: true, token})
 }
