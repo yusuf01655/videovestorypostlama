@@ -7,9 +7,9 @@ const ErrorResponse = require("../utils/errorResponse")
 exports.kaydol = async (req, res, next) => {
     const {email} = req.body;
     const userExist = await User.findOne({email});
-    if(userExist){
+    /* if(userExist){
         return next(new ErrorResponse('bu email zaten var...',400));
-    }
+    } */
     try{
         const user = await User.create(req.body);
         res.status(201).json({
@@ -18,10 +18,7 @@ exports.kaydol = async (req, res, next) => {
         })
     }catch(error){
         console.log("controllers>user.js>exports.kaydol kismi: "+error.message);
-        res.status(400).json({
-            success: false,
-            message: error.message
-        })
+        next(error);
     }
 }
 exports.girisYap = async (req, res, next) => {
@@ -74,6 +71,6 @@ exports.tekKullanici = async (req, res, next,) => {
             user
         })
     }catch(error){
-        next(new ErrorResponse(req.params.id + ' idye sahip kullanici bulunamadi.',404));
+        next(error);
     }
 }
