@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
+const errorHandler = require('./middleware/error')
 ///veritabanina baglan
 const mongoDbUri = "mongodb://localhost:27017/videovestorypostlama";
 mongoose.connect(mongoDbUri,{useNewUrlParser:true,});
@@ -24,6 +25,8 @@ appp.use(bodyParser.json())
 //routes middleware
 appp.use("/api",userRoutes);
 appp.use(cookieParser());
+//error middleware
+appp.use(errorHandler);
 
 /* appp.get('/', (req, res) => {
     res.send('Anasayfa');
