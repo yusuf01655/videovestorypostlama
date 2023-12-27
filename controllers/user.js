@@ -71,3 +71,11 @@ const generateToken = async (user, statusCode, res) => {
     };
     res.status(statusCode).cookie('token', token, options).json({success: true, token})
 }
+//kullanici cikis yapma islemi
+exports.cikisYap = (req, res, next) => {
+    res.clearCookie('token');
+    res.status(200).json({
+        success: true,
+        message: "cikis yapildi."
+    })
+}
