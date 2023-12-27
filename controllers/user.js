@@ -1,4 +1,5 @@
 const User = require("../Models/User");
+const ErrorResponse = require("../utils/errorResponse")
 /* exports.merhabaYazdir = (req, res) => {
     res.json({message: "controller user calisiyor... "})
 
@@ -7,10 +8,7 @@ exports.kaydol = async (req, res, next) => {
     const {email} = req.body;
     const userExist = await User.findOne({email});
     if(userExist){
-        return res.status(400).json({
-            success: false,
-            message: "bu email zaten var...",
-        });
+        return next(new ErrorResponse('bu email zaten var...',400));
     }
     try{
         const user = await User.create(req.body);
@@ -30,26 +28,17 @@ exports.girisYap = async (req, res, next) => {
    try{
         const {email,password} = req.body;
         if(!email || !password){
-            return res.status(400).json({
-                success: false,
-                message: "eposta ya da sifre yanlis...",
-            })
+            return next(new ErrorResponse('eposta veya sifreyi bos birakmayiniz.',400));
         }
         //kullanici eposta kontrolu
         const user = await User.findOne({email});
         if(!user){
-            return res.status(400).json({
-                success: false,
-                message: "gecersiz eposta",
-            })
+            return next(new ErrorResponse('gecersiz sifre veya eposta',404));
         }
         //eslesip eslesmemesiyle ilgili olarak sifreyi dogrula 
         const isMatched = await user.comparePassword(password);
         if(!isMatched){
-            return res.status(400).json({
-                success: false,
-                message: "gecersiz sifre ",
-            })
+            return next(new ErrorResponse('gecersiz sifre veya eposta',404));
         }
         
 
@@ -57,10 +46,7 @@ exports.girisYap = async (req, res, next) => {
         generateToken(user, 200, res);
    }catch(error){
         console.log(error);
-        return res.status(400).json({
-            success: false,
-            message: "giris yapilmadi. bilgilerinizi kontrol ediniz.",
-        })
+        next(new ErrorResponse('giris yapilamadi bilgilerinizi kontrol ediniz',404));
    }
 }
 const generateToken = async (user, statusCode, res) => {
@@ -88,6 +74,6 @@ exports.tekKullanici = async (req, res, next,) => {
             user
         })
     }catch(error){
-        next(error);
+        next(new ErrorResponse(req.params.id + ' idye sahip kullanici bulunamadi.',404));
     }
 }
