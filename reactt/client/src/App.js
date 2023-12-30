@@ -4,6 +4,11 @@ import UploadForm from './components/UploadForm';
 import UploadsList from './components/UploadsList';
 import axios from 'axios';
 import { BACKEND_URI } from './config/constants';
+import anasayfa from './sayfalar/anasayfa';
+import kaydol from './sayfalar/kaydol';
+import girisyap from './sayfalar/girisyap';
+import {BrowserRouter, Route} from 'react-router-dom'
+
 const App = () => {
   const [medias,setMedias] = useState([])
 
@@ -38,10 +43,21 @@ const App = () => {
             <div className="card-body"><UploadsList medias = {medias} /></div>
           </div>
       </div>
-
+      <br />
+     <div>
+      <anasayfa />
+     </div>
+      
+      {/* shift alt a        yorum kisayolu */}
     </div>
+    
 
-  
+
+    <BrowserRouter>
+      <Route exact path="/anasayfa" component={anasayfa} />
+      <Route exact path="/girisyap" component={girisyap} />
+      <Route exact path="/kaydol" component={kaydol} />
+    </BrowserRouter>
   </>
   );
 }
