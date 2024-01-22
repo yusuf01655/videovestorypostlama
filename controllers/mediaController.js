@@ -28,3 +28,20 @@ exports.create = async(req, res) =>{
         res.status(400).json(error);
     }
 };
+exports.delete = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const deletedMedia = await Media.findByIdAndDelete(id);
+    console.log("Deleting media with ID:", id);
+    if (!deletedMedia) {
+      console.log("Media not found");
+      return res.status(404).json({ message: "Media not found" });
+    }
+    console.log("Media deleted successfully");
+    res.json({ message: "Media deleted successfully", deletedMedia });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+};

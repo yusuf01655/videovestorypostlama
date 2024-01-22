@@ -1,73 +1,73 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
+
 const userSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    trim: true,
-    unique: true,
-    required: [true, 'lutfen isim giriniz'],
-    maxlength: 32
-  },
-  email: {
-    type: String,
-    trim: true,
-    required: [true, 'lutfen email giriniz'],
-    unique: true,
-    match: [
-      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-      'gecerli bir email giriniz'
-  ]
 
-  },
-  password: {
-    type: String,
-    trim: true,
-    required: [true, 'lutfen sifre giriniz'],
-    minlength: [6,'sifre en az altı (6) karakter olmali' ],
-   
- /*    match: [
-      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-      'gecerli bir email giriniz'
-  ] */
-  },
-  rol: {
-    type: Number,
-    default: 0,
+   name: {
+       type: String,
+       trim: true,
+       required : [true, 'Lutfen isim giriniz'],
+       maxlength: 32
+   },
 
-  }
+   email: {
+       type: String,
+       trim: true,
+       required : [true, 'Lutfen eposta giriniz'],
+       unique: true,
+       match: [
+           /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+           'Please add a valid E-mail'
+       ]
 
-/*   salt: {
-    type: String,
-    required: true
-  },
-  created_at: {
-    type: Date,
-    default: Date.now
-  },
-  updated_at: {
-    type: Date,
-    default: Date.now
-  } */
+   },
+
+   password: {
+       type: String,
+       trim: true,
+       required : [true, 'Sifre girmek gerekli'],
+       minlength: [6, 'sifre en az 6 karakter olmali'],
+       match: [
+           /^(?=.*\d)(?=.*[@#\-_$%^&+=§!\?])(?=.*[a-z])(?=.*[A-Z])[0-9A-Za-z@#\-_$%^&+=§!\?]+$/,
+           'Sifre en az 1 tane buyuk harf , kucuk harf , sayi ve ozel karakter icermeli'
+       ]
+   },
+
+   role: {
+       type: Number,
+       default: 0,
+  
+   },
+
+
+
 }, {timestamps: true});
 
-//const User = 
-//kaydetmeden once sifrele
-userSchema.pre('save',async function(next){
-  if(!this.isModified('password')){
-    next()
-  }
-  this.password = await bcrypt.hash(this.password,10);
 
+
+// encrypting password before saving
+userSchema.pre('save', async function(next){
+
+   if(!this.isModified('password')){
+       next()
+   }
+   this.password = await bcrypt.hash(this.password, 10);
 });
-userSchema.methods.comparePassword = async function(yourPassword){
-  return await bcrypt.compare(yourPassword, this.password);
-}
-//token olustur
-userSchema.methods.jwtGenerateToken = function(){
-  return jwt.sign({id: this.id}, 'sjsjsjsjsjsjsjsj',{
-    expiresIn: 3600
 
-  })
-} 
-module.exports = mongoose.model('User', userSchema);
+
+
+// verify password
+userSchema.methods.comparePassword = async function(yourPassword){
+    return await bcrypt.compare(yourPassword, this.password);
+}
+
+// get the token
+userSchema.methods.jwtGenerateToken = function(){
+    return jwt.sign({id: this.id}, 'sjsj', {
+        expiresIn: 3600
+    });
+}
+
+
+module.exports = mongoose.model("User", userSchema);

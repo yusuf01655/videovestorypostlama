@@ -8,7 +8,7 @@ const errorHandler = require('./middleware/error')
 const cors = require('cors');
 ///veritabanina baglan
 const mongoDbUri = "mongodb://localhost:27017/videovestorypostlama";
-mongoose.connect(mongoDbUri,{useNewUrlParser:true,});
+mongoose.connect(mongoDbUri);
 mongoose.connection.on("connected",() => {
     console.log("mongodbye baglandik.");
 });
@@ -23,7 +23,7 @@ const userRoutes = require('./routes/user');
 //middleware
 appp.use(morgan('dev'));
 appp.use(bodyParser.json())
-appp.use(corse());
+appp.use(cors());
 //routes middleware
 appp.use("/api",userRoutes);
 appp.use(cookieParser());

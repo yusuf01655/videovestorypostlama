@@ -42,5 +42,23 @@ router.get('/all',mediaController.getAll);
 
 //post create new media islemi
 router.post('/create',upload.fields([{name: "videos", maxCount: 5,},]),mediaController.create);
+router.delete('/delete/:mediaId', async (req, res) => {
+    try {
+      const mediaId = req.params.mediaId;
+       // Use Mongoose to find and delete the media item
+    const deletedMedia = await Media.findOneAndDelete({ _id: mediaId });
+
+    if (!deletedMedia) {
+      // If no media item is found, return an error response
+      return res.status(404).json({ message: 'Media not found' });
+    }
+      
+
+      res.status(200).json({ message: 'Media deleted successfully' });
+    } catch (error) {
+      console.error('Error deleting media:', error);
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+  });
 module.exports = router;
 

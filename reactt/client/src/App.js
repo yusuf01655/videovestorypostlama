@@ -5,7 +5,7 @@ import UploadsList from './components/UploadsList';
 import axios from 'axios';
 import { BACKEND_URI } from './config/constants';
 import anasayfa from './sayfalar/anasayfa';
-import kaydol from './sayfalar/kaydol';
+import Kaydol2 from './sayfalar/Kaydol2';
 import girisyap from './sayfalar/girisyap';
 import {BrowserRouter, Route} from 'react-router-dom'
 
@@ -32,10 +32,10 @@ const App = () => {
         <div 
           className="card" 
           style={{height: "auto", width: "800px", margin: "40px", border: "1px solid black",}}>
-            <div className="card-body"><UploadForm getAllMedias = {getAllMedias} /></div>
+            <div className="card-body"><UploadForm getAllMedias = {getAllMedias} /></div> 
           </div>
       </div>
-
+      <div style={{ margin: "20px" }} /> {/* Add space using an empty div with margin */}
       <div className="col-md-6">
         <div 
           className="card" 
@@ -43,7 +43,7 @@ const App = () => {
             <div className="card-body"><UploadsList medias = {medias} /></div>
           </div>
       </div>
-      <br />
+      
      <div>
       <anasayfa />
      </div>
@@ -56,7 +56,9 @@ const App = () => {
     <BrowserRouter>
       <Route exact path="/anasayfa" component={anasayfa} />
       <Route exact path="/girisyap" component={girisyap} />
-      <Route exact path="/kaydol" component={kaydol} />
+      <Route exact path="/kaydol2" component={Kaydol2} />
+      <Route exact path="/item" component={Kaydol2} />
+
     </BrowserRouter>
   </>
   );

@@ -29,6 +29,6 @@ const UploadForm = ({ getAllMedias }) => {
                 <input type="file" name="videos" id="videos" multiple className="form-control" accept=".mp4, .mkv" onChange={(e) => {setVideos(e.target.files);}}/>
             </div>
             <button type="submit" className="btn btn-primary mt-2">Gönder</button>
-        </form></>);
+        </form> <br /></>);
     };
 export default UploadForm;
