@@ -12,7 +12,7 @@ import SignupForm from './components/SignupForm';
 import Item from './sayfalar/Item';
 import Videolar from './App';
 import VideoEditPage from './components/VideoEditPage';
-
+import TrimVideoPage from './sayfalar/TrimVideoPage';
 const Appp = () => {
   
   
@@ -29,7 +29,7 @@ const Appp = () => {
       <Route exact path="/Kaydol" component={Kaydol} />
       <Route exact path="/Videolar" component={Videolar} />
       <Route path="/edit/:mediaId" component={VideoEditPage} />
-      //<Route path="/edit/:mediaId/trim" component={VideoEditPage} />
+      <Route path="/edit/:mediaId/trim" component={TrimVideoPage} />
       
     </BrowserRouter>
   </>

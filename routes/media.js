@@ -60,5 +60,8 @@ router.delete('/delete/:mediaId', async (req, res) => {
       res.status(500).json({ message: 'Internal Server Error' });
     }
   });
+
+ 
+  
 module.exports = router;
 
