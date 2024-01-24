@@ -13,6 +13,7 @@ import Item from './sayfalar/Item';
 import Videolar from './App';
 import VideoEditPage from './components/VideoEditPage';
 import TrimVideoPage from './sayfalar/TrimVideoPage';
+import RotateVideoPage from './sayfalar/RotateVideoPage';
 const Appp = () => {
   
   
@@ -30,7 +31,7 @@ const Appp = () => {
       <Route exact path="/Videolar" component={Videolar} />
       <Route path="/edit/:mediaId" component={VideoEditPage} />
       <Route path="/edit/:mediaId/trim" component={TrimVideoPage} />
-      
+      <Route path="/edit/:mediaId/rotate" component={RotateVideoPage} />
     </BrowserRouter>
   </>
   );

@@ -173,6 +173,79 @@ if (fileExists) {
     command.run();
   });
 
+  degreeInRadian = '';
+  // Example server route handling the rotate operation
+app.post('/api/v1/media/rotate/:mediaId', async (req, res) => {
+  console.log('Received rotate request for mediaId:', req.params.mediaId);
+  console.log('Received rotation angle:', req.body.rotationAngle);
+
+  const { mediaId } = req.params;
+  const { rotationAngle } = req.body;
+  //degreeInRadian = rotationAngle * (Math.PI/180);
+  // Find the media document by the mediaId
+  const media = await Media.findById(mediaId);
+
+  // Check if the media document exists
+  if (!media) {
+    // Send a not found response
+    return res.status(404).json({ message: 'Media not found' });
+  }
+
+  // Get the first video from the videos array
+  const video = media.videos[0];
+
+  // Construct the input file path
+  const inputFilePath = video;
+
+  // Check if the input file path exists
+  const fileExists = fs.existsSync('.' + inputFilePath);
+
+  // If the file exists, proceed with rotation
+  if (fileExists) {
+    try {
+      // Construct the output file path
+      const outputFilePath = `./public/videos/flipped_${path.basename(inputFilePath)}`;
+      /* if(rotationAngle == 90){
+        //.videoFilter(`rotate=${degreeInRadian}`)
+      } */
+      // Create a ffmpeg command to rotate the video
+      dondurmeAcisi = rotationAngle; 
+      
+      if(dondurmeAcisi==4){
+        dondurmeAcisi = '2,transpose=2'
+      }
+      videoFilterParametresi = `transpose=${dondurmeAcisi}`
+      const command = ffmpeg('.' + inputFilePath)
+        .videoFilter(videoFilterParametresi)
+        .output(outputFilePath)
+        .on('error', (err) => {
+          // Handle the error
+          console.error('Error rotating video:', err);
+          // Send an error response
+          return res.status(500).json({ message: 'Error rotating video' });
+        })
+        .on('end', () => {
+          // Handle the success
+          console.log('Video rotated successfully');
+          // Send a success response with the rotated video URL
+          return res.status(200).json({
+            message: 'Video rotated successfully',
+            rotatedVideoUrl: outputFilePath,
+          });
+        });
+
+      command.run();
+    } catch (error) {
+      console.error('Error during rotation:', error);
+      return res.status(500).json({ message: 'Internal server error' });
+    }
+  } else {
+    // Log that the file does not exist
+    console.log('The file does not exist');
+    return res.status(404).json({ message: 'Video file not found' });
+  }
+});
+
 
 
 app.listen(PORT, () => {
