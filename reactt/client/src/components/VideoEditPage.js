@@ -16,7 +16,7 @@ const VideoEditPage = ({ match }) => {
           <Link to={`/edit/${mediaId}/rotate`}>Rotate Video</Link>
         </li>
         <li>
-          <Link to={`/edit/${mediaId}/crop`}>Crop Video</Link>
+          <Link to={`/edit/${mediaId}/overlaysticker`}>Videoya sticker ekle</Link>
         </li>
         {/* Add more links for other editing actions */}
       </ul>

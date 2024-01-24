@@ -14,6 +14,7 @@ import Videolar from './App';
 import VideoEditPage from './components/VideoEditPage';
 import TrimVideoPage from './sayfalar/TrimVideoPage';
 import RotateVideoPage from './sayfalar/RotateVideoPage';
+import EditVideoWithStickerPage from './sayfalar/EditVideoWithStickerPage';
 const Appp = () => {
   
   
@@ -32,6 +33,7 @@ const Appp = () => {
       <Route path="/edit/:mediaId" component={VideoEditPage} />
       <Route path="/edit/:mediaId/trim" component={TrimVideoPage} />
       <Route path="/edit/:mediaId/rotate" component={RotateVideoPage} />
+      <Route path="/edit/:mediaId/overlaysticker" component={EditVideoWithStickerPage} />
     </BrowserRouter>
   </>
   );
