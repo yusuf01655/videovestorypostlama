@@ -554,6 +554,50 @@ app.post('/api/v1/media/parlaklikvekontrast/:mediaId', async (req, res) => {
   }
 });
 
+app.post('/api/v1/media/bulaniklastir/:mediaId', async (req, res) => {
+  const { mediaId } = req.params;
+  const {videoPozisyonu} = req.body;
+  try {
+    const media =  await Media.findById(mediaId);
+
+  // Check if the media document exists
+  if (!media) {
+    // Send a not found response
+    return res.status(404).json({ message: 'Media not found' });
+  }
+
+  // Get the first video from the videos array
+  const video = media.videos[0];
+
+  // Construct the input file path
+  const inputVideoPath = path.join(__dirname, video);
+
+
+   
+    // Output video file path
+    const outputVideoPath = `./public/videos/bulanik${path.basename(inputVideoPath)}`;
+
+    
+    
+  
+  //`boxblur=${videoPozisyonu.blurstrength1}:${videoPozisyonu.blurstrength2}`
+    ffmpeg(inputVideoPath)
+      .output(outputVideoPath)
+      .videoFilter(`boxblur=${videoPozisyonu.blurstrength1}:${videoPozisyonu.blurstrength2}`)
+      .on('end', () => {
+        console.log('bulaniklastirma islemi tamamdir');
+        res.status(200).json({ message: 'bulaniklastirma islemi tamam' });
+      })
+      .on('error', (err) => {
+        console.error('Error during bulaniklastirma operation:', err);
+        res.status(500).json({ error: 'Error during bulaniklastirma operation' });
+      })
+      .run();
+  } catch (error) {
+    console.error('Error processing video:', error);
+    res.status(500).json({ error: 'Error processing video' });
+  }
+});
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

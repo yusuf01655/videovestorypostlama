@@ -33,6 +33,9 @@ const VideoEditPage = ({ match }) => {
         <li>
           <Link to={`/edit/${mediaId}/parlaklikvekontrast`}>Parlaklik ve kontrast ayarla</Link>
         </li>
+        <li>
+          <Link to={`/edit/${mediaId}/bulaniklastir`}>Bulaniklastir</Link>
+        </li>
         {/* Add more links for other editing actions */}
       </ul>
     </div>

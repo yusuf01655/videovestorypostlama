@@ -20,6 +20,7 @@ import GriTonlamaliVideoPage from './sayfalar/GriTonlamaliVideoPage';
 import YenidenOlceklendirPage from './sayfalar/YenidenOlceklendirPage';
 import KirpPage from './sayfalar/KirpPage';
 import ParlaklikVeKontrastPage from './sayfalar/ParlaklikVeKontrastPage';
+import Bulaniklastir from './sayfalar/Bulaniklastir';
 const Appp = () => {
   
   
@@ -44,6 +45,7 @@ const Appp = () => {
       <Route path="/edit/:mediaId/yenidenolceklendir" component={YenidenOlceklendirPage} />
       <Route path="/edit/:mediaId/kirp" component={KirpPage} />
       <Route path="/edit/:mediaId/parlaklikvekontrast" component={ParlaklikVeKontrastPage} />
+      <Route path="/edit/:mediaId/bulaniklastir" component={Bulaniklastir} />
       
     </BrowserRouter>
   </>
