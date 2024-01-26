@@ -7,16 +7,22 @@ const VideoEditPage = ({ match }) => {
     const { mediaId } = match.params;
   return (
     <div>
-      <h2>Edit Video</h2>
+      <h2>Video Duzenleme islemleri</h2>
       <ul>
         <li>
-          <Link to={`/edit/${mediaId}/trim`}>Trim Video</Link>
+          <Link to={`/edit/${mediaId}/trim`}>Trim Video belirli zaman araliginda videoyu kes. </Link>
         </li>
         <li>
-          <Link to={`/edit/${mediaId}/rotate`}>Rotate Video</Link>
+          <Link to={`/edit/${mediaId}/rotate`}>Videoyu dondur</Link>
         </li>
         <li>
           <Link to={`/edit/${mediaId}/overlaysticker`}>Videoya sticker ekle</Link>
+        </li>
+        <li>
+          <Link to={`/edit/${mediaId}/overlaytext`}>Videoya metin ekle</Link>
+        </li>
+        <li>
+          <Link to={`/edit/${mediaId}/gritonlamaliyap`}>Videoyu Gri tonlamali Yap</Link>
         </li>
         {/* Add more links for other editing actions */}
       </ul>

@@ -297,8 +297,7 @@ app.post('/api/v1/media/overlaysticker/:mediaId', async (req, res) => {
   //overlay=main_w-overlay_w:main_h-overlay_h  //sag alt koseye yerlestiriyor, ilk denedigim
     // Execute ffmpeg command to overlay the sticker on the video
     //https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Logo_of_Twitter.svg/800px-Logo_of_Twitter.svg.png
-    //denenecek ornek resimler https://www.google.com/images/branding/googlelogo/1x/googlelogo_light_color_272x92dp.png
-    //https://ubom.iste.edu.tr/pluginfile.php/1/core_admin/logo/0x200/1705603946/iste_tr.png
+    
 
     await new Promise((resolve, reject) => {
       ffmpeg()
@@ -319,6 +318,62 @@ app.post('/api/v1/media/overlaysticker/:mediaId', async (req, res) => {
     console.error('Error inserting sticker overlay:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
+});
+
+app.post('/api/v1/media/overlaytext/:mediaId', async (req, res) => {
+  const { mediaId } = req.params;
+  const { textPosition } = req.body;
+  try{
+      const media =  await Media.findById(mediaId);
+
+  // Check if the media document exists
+  if (!media) {
+    // Send a not found response
+    return res.status(404).json({ message: 'Media not found' });
+  }
+
+  // Get the first video from the videos array
+  const video = media.videos[0];
+
+  // Construct the input file path
+  const inputVideoPath = path.join(__dirname, video);
+
+
+   
+    // Output video file path
+    const outputVideoPath = `./public/videos/metineklenmis_${path.basename(inputVideoPath)}`;
+    const fontPath = `./public/font/times.ttf`;
+  // Assuming you have the video path; adjust this accordingly based on your actual setup
+  
+
+  // Execute FFmpeg command to add text overlay
+  ffmpeg(inputVideoPath)
+    .complexFilter([
+      {
+        filter: 'drawtext',
+        options: {
+          fontfile: fontPath, // Provide the path to your font file
+          text: 'Your Text Here',
+          fontsize: 24,
+          x: textPosition.x,
+          y: textPosition.y,
+          fontcolor: 'red',
+        },
+      },
+    ])
+    .on('end', () => {
+      console.log('Video edited successfully!');
+      res.status(200).json({ message: 'Video edited successfully!' });
+    })
+    .on('error', (err) => {
+      console.error('Error editing video:', err);
+      res.status(500).json({ error: 'Error editing video' });
+    })
+    .save(outputVideoPath); // Specify the output path
+}catch(error){
+  console.error('Error inserting text overlay:', error);
+  res.status(500).json({ error: 'Internal Server Error' });
+}
 });
 
 
