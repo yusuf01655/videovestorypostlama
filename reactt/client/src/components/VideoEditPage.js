@@ -24,6 +24,15 @@ const VideoEditPage = ({ match }) => {
         <li>
           <Link to={`/edit/${mediaId}/gritonlamaliyap`}>Videoyu Gri tonlamali Yap</Link>
         </li>
+        <li>
+          <Link to={`/edit/${mediaId}/yenidenolceklendir`}>Video cozunurlugu Yeniden Olceklendir</Link>
+        </li>
+        <li>
+          <Link to={`/edit/${mediaId}/kirp`}>Video Kirp</Link>
+        </li>
+        <li>
+          <Link to={`/edit/${mediaId}/parlaklikvekontrast`}>Parlaklik ve kontrast ayarla</Link>
+        </li>
         {/* Add more links for other editing actions */}
       </ul>
     </div>

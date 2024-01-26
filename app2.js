@@ -375,7 +375,7 @@ app.post('/api/v1/media/overlaytext/:mediaId', async (req, res) => {
   res.status(500).json({ error: 'Internal Server Error' });
 }
 });
-
+//endpoint 
 app.post('/api/v1/media/gritonlamaliyap/:mediaId', async (req, res) => {
   const { mediaId } = req.params;
 
@@ -420,7 +420,139 @@ app.post('/api/v1/media/gritonlamaliyap/:mediaId', async (req, res) => {
     res.status(500).json({ error: 'Error processing video' });
   }
 });
+app.post('/api/v1/media/yenidenolceklendir/:mediaId', async (req, res) => {
+  const { mediaId } = req.params;
+  const {videoPozisyonu} = req.body;
+  try {
+    const media =  await Media.findById(mediaId);
 
+  // Check if the media document exists
+  if (!media) {
+    // Send a not found response
+    return res.status(404).json({ message: 'Media not found' });
+  }
+
+  // Get the first video from the videos array
+  const video = media.videos[0];
+
+  // Construct the input file path
+  const inputVideoPath = path.join(__dirname, video);
+
+
+   
+    // Output video file path
+    const outputVideoPath = `./public/videos/olceklendirilmis_${path.basename(inputVideoPath)}`;
+
+    
+    
+  
+  
+    ffmpeg(inputVideoPath)
+      .output(outputVideoPath)
+      .videoFilter(`scale=${videoPozisyonu.genislik}:${videoPozisyonu.yukseklik}`)
+      .on('end', () => {
+        console.log('yeniden olceklendirme islemi tamamdir');
+        res.status(200).json({ message: 'Video successfully grayscaled' });
+      })
+      .on('error', (err) => {
+        console.error('Error during grayscale operation:', err);
+        res.status(500).json({ error: 'Error during scaling operation' });
+      })
+      .run();
+  } catch (error) {
+    console.error('Error processing video:', error);
+    res.status(500).json({ error: 'Error processing video' });
+  }
+});
+app.post('/api/v1/media/kirp/:mediaId', async (req, res) => {
+  const { mediaId } = req.params;
+  const {videoPozisyonu} = req.body;
+  try {
+    const media =  await Media.findById(mediaId);
+
+  // Check if the media document exists
+  if (!media) {
+    // Send a not found response
+    return res.status(404).json({ message: 'Media not found' });
+  }
+
+  // Get the first video from the videos array
+  const video = media.videos[0];
+
+  // Construct the input file path
+  const inputVideoPath = path.join(__dirname, video);
+
+
+   
+    // Output video file path
+    const outputVideoPath = `./public/videos/kirpilmis_${path.basename(inputVideoPath)}`;
+
+    
+    
+  
+  
+    ffmpeg(inputVideoPath)
+      .output(outputVideoPath)
+      .videoFilter(`crop=${videoPozisyonu.genislik}:${videoPozisyonu.yukseklik}:${videoPozisyonu.x}:${videoPozisyonu.y}:`)
+      .on('end', () => {
+        console.log('kirpma islemi tamamdir');
+        res.status(200).json({ message: 'Video successfully kirpildi' });
+      })
+      .on('error', (err) => {
+        console.error('Error during kirpma operation:', err);
+        res.status(500).json({ error: 'Error during scaling operation' });
+      })
+      .run();
+  } catch (error) {
+    console.error('Error processing video:', error);
+    res.status(500).json({ error: 'Error processing video' });
+  }
+});
+
+app.post('/api/v1/media/parlaklikvekontrast/:mediaId', async (req, res) => {
+  const { mediaId } = req.params;
+  const {videoPozisyonu} = req.body;
+  try {
+    const media =  await Media.findById(mediaId);
+
+  // Check if the media document exists
+  if (!media) {
+    // Send a not found response
+    return res.status(404).json({ message: 'Media not found' });
+  }
+
+  // Get the first video from the videos array
+  const video = media.videos[0];
+
+  // Construct the input file path
+  const inputVideoPath = path.join(__dirname, video);
+
+
+   
+    // Output video file path
+    const outputVideoPath = `./public/videos/parlaklikkontrast_${path.basename(inputVideoPath)}`;
+
+    
+    
+  
+  
+    ffmpeg(inputVideoPath)
+      .output(outputVideoPath)
+      .videoFilter(`eq=brightness=${videoPozisyonu.parlaklik}:contrast=${videoPozisyonu.kontrast}`)
+      .on('end', () => {
+        console.log('parlaklik kontrast islemi tamamdir');
+        res.status(200).json({ message: 'parlaklik kontrast islemi tamam' });
+      })
+      .on('error', (err) => {
+        console.error('Error during brightness contrast operation:', err);
+        res.status(500).json({ error: 'Error during brightness contrast operation' });
+      })
+      .run();
+  } catch (error) {
+    console.error('Error processing video:', error);
+    res.status(500).json({ error: 'Error processing video' });
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

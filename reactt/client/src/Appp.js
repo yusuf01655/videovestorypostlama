@@ -17,6 +17,9 @@ import RotateVideoPage from './sayfalar/RotateVideoPage';
 import EditVideoWithStickerPage from './sayfalar/EditVideoWithStickerPage';
 import VideoyaMetinEkle from './sayfalar/VideoyaMetinEkle';
 import GriTonlamaliVideoPage from './sayfalar/GriTonlamaliVideoPage';
+import YenidenOlceklendirPage from './sayfalar/YenidenOlceklendirPage';
+import KirpPage from './sayfalar/KirpPage';
+import ParlaklikVeKontrastPage from './sayfalar/ParlaklikVeKontrastPage';
 const Appp = () => {
   
   
@@ -38,6 +41,10 @@ const Appp = () => {
       <Route path="/edit/:mediaId/overlaysticker" component={EditVideoWithStickerPage} />
       <Route path="/edit/:mediaId/overlaytext" component={VideoyaMetinEkle} />
       <Route path="/edit/:mediaId/gritonlamaliyap" component={GriTonlamaliVideoPage} />
+      <Route path="/edit/:mediaId/yenidenolceklendir" component={YenidenOlceklendirPage} />
+      <Route path="/edit/:mediaId/kirp" component={KirpPage} />
+      <Route path="/edit/:mediaId/parlaklikvekontrast" component={ParlaklikVeKontrastPage} />
+      
     </BrowserRouter>
   </>
   );
