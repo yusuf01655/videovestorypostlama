@@ -16,6 +16,7 @@ import TrimVideoPage from './sayfalar/TrimVideoPage';
 import RotateVideoPage from './sayfalar/RotateVideoPage';
 import EditVideoWithStickerPage from './sayfalar/EditVideoWithStickerPage';
 import VideoyaMetinEkle from './sayfalar/VideoyaMetinEkle';
+import GriTonlamaliVideoPage from './sayfalar/GriTonlamaliVideoPage';
 const Appp = () => {
   
   
@@ -36,6 +37,7 @@ const Appp = () => {
       <Route path="/edit/:mediaId/rotate" component={RotateVideoPage} />
       <Route path="/edit/:mediaId/overlaysticker" component={EditVideoWithStickerPage} />
       <Route path="/edit/:mediaId/overlaytext" component={VideoyaMetinEkle} />
+      <Route path="/edit/:mediaId/gritonlamaliyap" component={GriTonlamaliVideoPage} />
     </BrowserRouter>
   </>
   );

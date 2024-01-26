@@ -376,6 +376,51 @@ app.post('/api/v1/media/overlaytext/:mediaId', async (req, res) => {
 }
 });
 
+app.post('/api/v1/media/gritonlamaliyap/:mediaId', async (req, res) => {
+  const { mediaId } = req.params;
+
+  try {
+    const media =  await Media.findById(mediaId);
+
+  // Check if the media document exists
+  if (!media) {
+    // Send a not found response
+    return res.status(404).json({ message: 'Media not found' });
+  }
+
+  // Get the first video from the videos array
+  const video = media.videos[0];
+
+  // Construct the input file path
+  const inputVideoPath = path.join(__dirname, video);
+
+
+   
+    // Output video file path
+    const outputVideoPath = `./public/videos/gritonlamali_${path.basename(inputVideoPath)}`;
+
+    
+    //colorchannelmixer=0.3:0.4:0.3:0.3:0.3:0.3:0.3:0.3:0.3:0.3 //onceki
+  //hue=s=0
+    // Grayscale the video using fluent-ffmpeg
+    ffmpeg(inputVideoPath)
+      .output(outputVideoPath)
+      .videoFilter('hue=s=0')
+      .on('end', () => {
+        console.log('Grayscale operation finished');
+        res.status(200).json({ message: 'Video successfully grayscaled' });
+      })
+      .on('error', (err) => {
+        console.error('Error during grayscale operation:', err);
+        res.status(500).json({ error: 'Error during grayscale operation' });
+      })
+      .run();
+  } catch (error) {
+    console.error('Error processing video:', error);
+    res.status(500).json({ error: 'Error processing video' });
+  }
+});
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
