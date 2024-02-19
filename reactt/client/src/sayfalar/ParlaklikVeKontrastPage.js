@@ -63,7 +63,7 @@ const ParlaklikVeKontrastPage = () => {
       
       
 
-      <button onClick={handleEdit}>Kirp</button>
+      <button onClick={handleEdit}>Ayarla</button>
     </div>
   );
 

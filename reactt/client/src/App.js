@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './App.css';
+
 import UploadForm from './components/UploadForm';
 import UploadsList from './components/UploadsList';
 import axios from 'axios';
@@ -26,20 +26,21 @@ const App = () => {
   }
   return (
   <>
+  <p class="center large">This paragraph refers to two classes.</p>
     <div className="row">
 
       <div className="col-md-6">
         <div 
           className="card" 
-          style={{height: "auto", width: "800px", margin: "40px", border: "1px solid black",}}>
+          >
             <div className="card-body"><UploadForm getAllMedias = {getAllMedias} /></div> 
           </div>
       </div>
-      <div style={{ margin: "20px" }} /> {/* Add space using an empty div with margin */}
+      <div className = "div1" /> {/* Add space using an empty div with margin */}
       <div className="col-md-6">
         <div 
           className="card" 
-          style={{height: "auto", width: "800px", margin: "40px", border: "1px solid black",}}>
+          >
             <div className="card-body"><UploadsList medias = {medias} /></div>
           </div>
       </div>
@@ -48,7 +49,7 @@ const App = () => {
       <anasayfa />
      </div>
       
-      {/* shift alt a        yorum kisayolu */}
+      {/* shift alt a        yorum kisayolu style={{height: "auto", width: "800px", margin: "40px", border: "1px solid black",}}  */}
     </div>
     
 

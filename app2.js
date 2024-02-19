@@ -323,6 +323,7 @@ app.post('/api/v1/media/overlaysticker/:mediaId', async (req, res) => {
 app.post('/api/v1/media/overlaytext/:mediaId', async (req, res) => {
   const { mediaId } = req.params;
   const { textPosition } = req.body;
+  const { mytext } = req.body;
   try{
       const media =  await Media.findById(mediaId);
 
@@ -353,7 +354,7 @@ app.post('/api/v1/media/overlaytext/:mediaId', async (req, res) => {
         filter: 'drawtext',
         options: {
           fontfile: fontPath, // Provide the path to your font file
-          text: 'Your Text Here',
+          text: mytext,
           fontsize: 24,
           x: textPosition.x,
           y: textPosition.y,

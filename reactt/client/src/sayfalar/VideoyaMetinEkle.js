@@ -5,7 +5,7 @@ import axios from 'axios';
 import { BACKEND_URI } from '../config/constants';
 
 const OverlayTextToVideoPage = () => {
-  const [text, setText] = useState('');
+  const [mytext, setText] = useState('');
   const [textPosition, setTextPosition] = useState({ x: 0, y: 0 });
   const { mediaId } = useParams();
   const handleEdit =  () => {
@@ -15,7 +15,7 @@ const OverlayTextToVideoPage = () => {
       // Send a request to edit the video with text
          axios.post(`${BACKEND_URI}/api/v1/media/overlaytext/${mediaId}`, {
         
-        textPosition,
+        textPosition, mytext
       });
 
       // Optionally, you can redirect to another page or show a success message
@@ -30,7 +30,7 @@ const OverlayTextToVideoPage = () => {
       <h1>Videoya Metin Ekle</h1>
       <input
         type="text"
-        value={text}
+        value={mytext}
         onChange={(e) => setText(e.target.value)}
         placeholder="Enter Text"
       />

@@ -1,0 +1,102 @@
+/* body {
+  background-color: lightblue;
+}
+/*
+h1 {
+  color: white;
+  text-align: center;
+}
+
+p {
+  font-family: verdana;
+  font-size: 20px;
+  color: red;
+  text-align: center;
+}
+.card {
+  height: auto;
+  width: 800px;
+  margin: 40px;
+  border: 1px solid black;
+}
+.div1 {
+  margin: "20px";
+}*/
+#para1 {
+    text-align: center; /*id="para1" olan */
+    color: red;
+  }
+  .center {
+    text-align: center;
+    color: red;
+  }
+  p.center {
+    text-align: center;
+    color: red;
+  }
+  * {
+    text-align: center;
+    color: blue;
+  }
+  h1 {
+    text-align: center;
+    color: red;
+  }
+  
+  h2 {
+    text-align: center;
+    color: red;
+  }
+  
+  p {
+    text-align: center;
+    color: red;
+  }
+  h1, h2, p {
+    text-align: center;
+    color: red;
+  }
+  body {
+    background-color: lightblue;
+  }
+  
+  h1 {
+    color: navy;
+    margin-left: 20px;
+  }
+  body {
+    background-color: #fc9; /* same as #ffcc99 */
+  }
+  
+  h1 {
+    color: #f0f; /* same as #ff00ff */
+  }
+  
+  p {
+    color: #b58; /* same as #bb5588 */
+  }
+  body {
+    background-color: lightblue;
+  }
+  h1 {
+    background-color: green;
+  }
+  
+  div {
+    background-color: lightblue;
+  }
+  
+  p {
+    background-color: yellow;
+  }
+  div {
+    background-color: green;
+    opacity: 0.3;
+  }
+  div {
+    background: rgba(0, 128, 0, 0.3) /* Green background with 30% opacity */
+  }
+  body {
+    background-image: url("https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148902771.jpg?size=626&ext=jpg&ga=GA1.1.87170709.1707350400&semt=sph");
+  } 
+   
