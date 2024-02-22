@@ -5,12 +5,17 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { BACKEND_URI } from '../config/constants';
 import ReactPlayer from 'react-player';
-
+import sticker1 from '../stickerlar/sticker1.png';
+import sticker2 from '../stickerlar/sticker2.png';
 const EditVideoWithStickerPage = () => {
   const { mediaId } = useParams();
   const [stickerUrl, setStickerUrl] = useState('');
   const [stickerPosition, setStickerPosition] = useState({ x: 0, y: 0 });
   const playerRef = useRef(); // create a ref for the video element
+  const images = [
+    // Replace with your image URLs
+    
+  ];
   const handleEdit = async () => {
     try {
       // Send a request to edit the video with sticker
@@ -89,19 +94,26 @@ const EditVideoWithStickerPage = () => {
       {/* ReactPlayer to preview the edited video */}
       <ReactPlayer
         url={`${BACKEND_URI}/api/v1/media/getVideo/${mediaId}`}
-        width="720px"
-        height="1280px"
+        width="400px"
+        height="400px"
         playing
         controls
         ref={playerRef} // add a ref attribute to the ReactPlayer component
         onMouseMove={handleMouseMove} // add a onMouseMove event handler to the ReactPlayer component
       />
+      <table>
+        <th>stickerlar</th>
+        <tr><td><img src={sticker1} alt='sticker1'/></td><img src={sticker2} alt='sticker2'/><td></td></tr>
+      </table>
+      
+      
+      
 
       {/* Button to trigger the edit */}
-      <br />
-      
     </div>
-    <button onClick={handleEdit}>Edit Video</button>
+    
+      <br />
+      <button onClick={handleEdit}>Edit Video</button>
     </>);
 };
 
