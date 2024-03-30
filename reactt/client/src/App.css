@@ -37,3 +37,23 @@
   }
 }
 
+
+
+.stickeroverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none; /* Allow clicks to pass through the overlay */
+}
+
+.stickeroverlay img {
+  max-width: 100px; /* Adjust the maximum width of the stickers */
+  position: absolute;
+  /* Customize the positioning of each sticker */
+}
+
