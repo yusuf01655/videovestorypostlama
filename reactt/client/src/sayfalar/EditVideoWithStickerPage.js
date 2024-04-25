@@ -81,7 +81,7 @@ topMid.addEventListener('mousedown', e => resizeHandler(e, false, true, false, t
 bottomMid.addEventListener('mousedown', e => resizeHandler(e, false, false, false, true));
 leftTop.addEventListener('mousedown', e => resizeHandler(e, true, true, true, true));
 rightTop.addEventListener('mousedown', e => resizeHandler(e, false, true, true, true));
-rightBottom.addEventListener('mousedown', e => resizeHandler(e, false, false, true, true));
+rightBottom.addEventListener('mousedown', e => resizeRightBottomHandler(e, false, false, true, true));
 leftBottom.addEventListener('mousedown', e => resizeHandler(e, true, false, true, true));
 // handle rotation
 
@@ -116,6 +116,73 @@ rotate.addEventListener('mousedown', function (event) {
 
 }, false);
 // done drag support
+function resizeRightBottomHandler(event, left = false, top = false, xResize = false, yResize = false) {
+  initX = boxWrapper.offsetLeft;
+  initY = boxWrapper.offsetTop;
+  mousePressX = event.clientX;
+  mousePressY = event.clientY;
+
+  initW = box.offsetWidth;
+  initH = box.offsetHeight;
+
+  initRotate = getCurrentRotation(boxWrapper);
+  var initRadians = initRotate * Math.PI / 180;
+  var cosFraction = Math.cos(initRadians);
+  var sinFraction = Math.sin(initRadians);
+  // Calculate the aspect ratio of the image
+  var aspectRatio = initW / initH;
+
+  function eventMoveHandler(event) {
+      var wDiff = (event.clientX - mousePressX);
+      var hDiff = (event.clientY - mousePressY);
+      var rotatedWDiff = cosFraction * wDiff + sinFraction * hDiff;
+      var rotatedHDiff = cosFraction * hDiff - sinFraction * wDiff;
+
+      var newW = initW, newH = initH, newX = initX, newY = initY;
+
+      if (xResize) {
+        var scaleFactor = 1;
+
+          if (left) {
+              scaleFactor = (initW - rotatedWDiff) / initW;
+          } else {
+            scaleFactor = (initW + rotatedWDiff) / initW;
+          }
+          newW *= scaleFactor;
+      newH = newW / aspectRatio;
+      
+         
+          newX += 0.5 * (initW - newW) * cosFraction;
+      newY += 0.5 * (initW - newW) * sinFraction;
+      }
+
+      if (yResize) {
+        // Calculate the scaling factor based on the aspect ratio
+      var scaleFactor = 1;
+
+          if (top) {
+            scaleFactor = (initH - rotatedHDiff) / initH;  
+          } else {
+            scaleFactor = (initH + rotatedHDiff) / initH;
+          }
+          newH *= scaleFactor;
+      newW = newH * aspectRatio;
+
+      newX -= 0.5 * (initH - newH) * sinFraction;
+      newY += 0.5 * (initH - newH) * cosFraction;
+      }
+
+      resize(newW, newH);
+      repositionElement(newX, newY);
+  }
+
+
+  window.addEventListener('mousemove', eventMoveHandler, false);
+  window.addEventListener('mouseup', function eventEndHandler() {
+      window.removeEventListener('mousemove', eventMoveHandler, false);
+      window.removeEventListener('mouseup', eventEndHandler);
+  }, false);
+}
 function resizeHandler(event, left = false, top = false, xResize = false, yResize = false) {
   initX = boxWrapper.offsetLeft;
   initY = boxWrapper.offsetTop;
