@@ -22,6 +22,7 @@ const EditVideoWithStickerPage = () => {
   const [cropData, setCropData] = useState({ x: 0, y: 0, width: 100, height: 100 });
   const playerRef = useRef(); // create a ref for the video element
   const canvasRef = useRef();
+  const boxWrapperRef = useRef();
   const images = [
     // Replace with your image URLs
     
@@ -336,22 +337,27 @@ repositionElement(200, 200);
       alert('Error editing video');
     }
   };
-
   const handleMouseMove = (event) => {
-    // Get the global coordinates of the cursor
-    const globalX = event.clientX;
-    const globalY = event.clientY;
 
-    // Get the offset of the ReactPlayer element from the viewport edges
-    const offsetX = playerRef.current.wrapper.offsetLeft;
-    const offsetY = playerRef.current.wrapper.offsetTop;
+  }
 
-    // Calculate the local coordinates of the cursor relative to the ReactPlayer element
-    const localX = globalX - offsetX;
-    const localY = globalY - offsetY;
+  const handleMouseUpResimKoordinati = (event) => {
+    const boxWrapper = boxWrapperRef.current;
 
-    // Set the sticker position state to the local coordinates
-    setStickerPosition({ x: localX, y: localY });
+  const boxOffsetX = boxWrapper.offsetLeft;
+  const boxOffsetY = boxWrapper.offsetTop;
+  const playerOffsetX = playerRef.current.wrapper.offsetLeft;
+  const playerOffsetY = playerRef.current.wrapper.offsetTop;
+
+  const boxRelativeX = boxOffsetX - playerOffsetX;
+  const boxRelativeY = boxOffsetY - playerOffsetY;
+
+  // Set state
+  setStickerPosition({
+    x: boxRelativeX,
+    y: boxRelativeY
+  });
+
   };
 
   ///
@@ -437,8 +443,9 @@ function getCurrentRotation(el) {
         playing
         controls
         ref={playerRef} // add a ref attribute to the ReactPlayer component
-        onMouseMove={handleMouseMove} // add a onMouseMove event handler to the ReactPlayer component
+        
         className = 'video'
+        
       />
       <div 
       ref = {overlayRef} 
@@ -460,7 +467,7 @@ function getCurrentRotation(el) {
       </div>
      
      
-      <div className="box-wrapper" id="box-wrapper">
+      <div className="box-wrapper" id="box-wrapper" ref={boxWrapperRef} onMouseUp= {handleMouseUpResimKoordinati}>
     <div className="box" id="box">
         <div className="dot rotate" id="rotate"></div>
         <div className="dot left-top" id="left-top"></div>
