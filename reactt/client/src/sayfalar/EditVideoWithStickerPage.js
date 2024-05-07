@@ -441,8 +441,8 @@ function getCurrentRotation(el) {
       <div className='video-crop-container' >
       <ReactPlayer
         url={`${BACKEND_URI}/api/v1/media/getVideo/${mediaId}`}
-        width="400px"
-        height="400px"
+        width="720px"
+        height="1280px"
         playing
         controls
         ref={playerRef} // add a ref attribute to the ReactPlayer component
