@@ -324,6 +324,9 @@ repositionElement(200, 200);
  
   const handleEdit = async () => {
     try {
+     // setStickerUrl(sticker1);
+      console.log("sticker urlmiz: "+stickerUrl);
+      console.log("sticker pozisyonumuz:"+stickerPosition.x +" "+ stickerPosition.y);
       // Send a request to edit the video with sticker
       await axios.post(`${BACKEND_URI}/api/v1/media/overlaysticker/${mediaId}`, {
         stickerUrl,

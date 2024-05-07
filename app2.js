@@ -272,8 +272,8 @@ app.get('/api/v1/media/getVideo/:mediaId', async (req, res) => {
 app.post('/api/v1/media/overlaysticker/:mediaId', async (req, res) => {
   try {
     const { mediaId } = req.params;
-    const { stickerUrl, stickerPosition } = req.body;
-
+    const { stickerPosition } = req.body;
+    const stickerUrl = `./public/stickerlarim/sticker1.png`;
     const media = await Media.findById(mediaId);
 
   // Check if the media document exists
@@ -287,7 +287,7 @@ app.post('/api/v1/media/overlaysticker/:mediaId', async (req, res) => {
 
   // Construct the input file path
   const inputVideoPath = path.join(__dirname, video);
-
+  
 
    
     // Output video file path
@@ -298,7 +298,7 @@ app.post('/api/v1/media/overlaysticker/:mediaId', async (req, res) => {
     // Execute ffmpeg command to overlay the sticker on the video
     //https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Logo_of_Twitter.svg/800px-Logo_of_Twitter.svg.png
     
-
+    console.log(stickerPosition.x + " "+stickerPosition.y + " " + stickerUrl);
     await new Promise((resolve, reject) => {
       ffmpeg()
         .input(inputVideoPath)
