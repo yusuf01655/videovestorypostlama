@@ -13,6 +13,10 @@ const EditVideoWithStickerPage = () => {
   const [stickerUrl, setStickerUrl] = useState('');
   const [stickerPosition, setStickerPosition] = useState({ x: 0, y: 0 });
   const [selectedImage, setSelectedImage] = useState(null); // Store selected image
+  const [scaledWidth,setScaledWitdh] = useState(0.0);
+    const [scaledHeight,setScaledHeight] =  useState(0.0);
+    const [rotationDegree, setRotationDegree] =  useState(0.0);
+
   const videoRef = useRef(null);
   const overlayRef = useRef(null);
   const selectionRef = useRef(null);
@@ -331,6 +335,9 @@ repositionElement(200, 200);
       await axios.post(`${BACKEND_URI}/api/v1/media/overlaysticker/${mediaId}`, {
         stickerUrl,
         stickerPosition,
+        rotationDegree,
+        scaledHeight,
+        scaledWidth
       });
 
       // Optionally, you can redirect to another page or show a success message
@@ -360,6 +367,14 @@ repositionElement(200, 200);
     x: boxRelativeX,
     y: boxRelativeY
   });
+  var divWidth = boxWrapper.offsetWidth;
+  var divHeight = boxWrapper.offsetWidth;
+  setRotationDegree(getCurrentRotation(boxWrapper));
+  setScaledWitdh(divWidth);
+  setScaledHeight(divHeight);
+  console.log("dondurme acisi: "+getCurrentRotation(boxWrapper));
+  console.log("boyut, yukseklik: "+divHeight+" genislik: "+divWidth);
+  
 
   };
 

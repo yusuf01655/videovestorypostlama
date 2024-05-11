@@ -272,9 +272,10 @@ app.get('/api/v1/media/getVideo/:mediaId', async (req, res) => {
 app.post('/api/v1/media/overlaysticker/:mediaId', async (req, res) => {
   try {
     const { mediaId } = req.params;
-    const { stickerPosition } = req.body;
+    const { stickerPosition,scaledWidth,scaledHeight,rotationDegree } = req.body;
     const stickerUrl = `./public/stickerlarim/sticker1.png`;
     const media = await Media.findById(mediaId);
+    const radyanCinsi = rotationDegree*(Math.PI/180)
 
   // Check if the media document exists
   if (!media) {
@@ -298,13 +299,21 @@ app.post('/api/v1/media/overlaysticker/:mediaId', async (req, res) => {
     // Execute ffmpeg command to overlay the sticker on the video
     //https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Logo_of_Twitter.svg/800px-Logo_of_Twitter.svg.png
     
-    console.log(stickerPosition.x + " "+stickerPosition.y + " " + stickerUrl);
+    console.log("sticker position: "+stickerPosition.x + " "+stickerPosition.y + " stickerurl: " + stickerUrl
+      +"rotation degree: "+radyanCinsi+" scaled width: "+scaledWidth+" scaledHeight: "+scaledHeight
+    );
     await new Promise((resolve, reject) => {
       ffmpeg()
         .input(inputVideoPath)
         .input(stickerUrl)
         .complexFilter([
-          `[0:v][1:v]overlay=${stickerPosition.x}:${stickerPosition.y}`
+          `[1:v]scale=${scaledWidth}:${scaledHeight}[scaled_sticker]`,
+          // Apply rotation filter first
+          `[scaled_sticker]rotate=angle=${radyanCinsi}:fillcolor=0x00000000:ow=rotw(${radyanCinsi}):oh=roth(${radyanCinsi})[rotated_sticker]`,
+          // Chain scale filter to resize the rotated sticker
+          // Overlay the scaled sticker onto the input video
+          `[0:v][rotated_sticker]overlay=${stickerPosition.x}:${stickerPosition.y}`
+          //
         ])
         .output(outputVideoPath)
         .on('end', resolve)
