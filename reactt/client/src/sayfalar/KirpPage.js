@@ -87,7 +87,8 @@ const KirpVideoPage = () => {
         />
       </label>
 
-      <button onClick={handleEdit}>Kirp</button>
+      <input type="checkbox" id="dahiletkirp" name="dahiletkirp" />
+    <label for="dahiletkirp">video kırpmayı dahil et</label><button onClick={handleEdit}>Edit Video</button>
     </div>
   );
 

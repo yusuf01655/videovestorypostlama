@@ -368,7 +368,7 @@ repositionElement(200, 200);
     y: boxRelativeY
   });
   var divWidth = boxWrapper.offsetWidth;
-  var divHeight = boxWrapper.offsetWidth;
+  var divHeight = boxWrapper.offsetHeight;
   setRotationDegree(getCurrentRotation(boxWrapper));
   setScaledWitdh(divWidth);
   setScaledHeight(divHeight);
@@ -515,9 +515,10 @@ function getCurrentRotation(el) {
       {/* Button to trigger the edit */}
     </div>
     
-      <br />
-      <button onClick={handleEdit}>Edit Video</button>
-      <button onClick={handleCropButtonClick}>Crop Video</button>
+      <br /><button onClick={handleEdit}>Edit Video</button>
+      <input type="checkbox" id="dahilettrim" name="dahilettrim" />
+    <label for="onaydahilet">video kesmeyi dahil et</label>
+      
     </>);
 };
 

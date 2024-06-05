@@ -48,7 +48,9 @@ const RotateVideoPage = () => {
       </select>
     </label>
     <br />
-    <button onClick={handleRotate}>Döndür</button>
+    <button onClick={handleRotate}>Videoyu döndür</button>
+    <input type="checkbox" id="dahiletrotate" name="dahiletrotate" />
+    <label for="dahiletrotate">video döndürmeyi dahil et</label>
   </div>);
 };
 

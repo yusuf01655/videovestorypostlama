@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { BACKEND_URI } from '../config/constants';
 
-const ScaleVideoPage = () => {
+const ScaleVideoPage = ({ scaleVideo, setScaleVideo }) => {
   
   const [videoPozisyonu, setVideoPozisyonu] = useState({ genislik: 0, yukseklik: 0 });
   const { mediaId } = useParams();
@@ -59,8 +59,11 @@ const ScaleVideoPage = () => {
             }))
           }
         />
+      
       </label>
-      <button onClick={handleEdit}>Yeniden olceklendir</button>
+      <input type="checkbox" id="dahiletscale" name="dahiletscale" checked={scaleVideo}
+        onChange={(e) => setScaleVideo(e.target.checked)} />
+    <label for="dahiletscale">video yeniden ölçeklendirmeyi dahil et</label><button onClick={handleEdit}>Edit Video</button>
     </div>
   );
 

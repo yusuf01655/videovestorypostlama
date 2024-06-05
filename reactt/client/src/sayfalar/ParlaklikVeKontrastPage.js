@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { BACKEND_URI } from '../config/constants';
 
-const ParlaklikVeKontrastPage = () => {
+const ParlaklikVeKontrastPage = ({ parlaklikVeKontrast, setParlaklikVeKontrast }) => {
   
   const [videoPozisyonu, setVideoPozisyonu] = useState({ parlaklik: 0, kontrast: 0 });
   const { mediaId } = useParams();
@@ -64,6 +64,9 @@ const ParlaklikVeKontrastPage = () => {
       
 
       <button onClick={handleEdit}>Ayarla</button>
+      <input type="checkbox" id="dahiletparlaklikvekontrast" name="dahiletparlaklikvekontrast" checked={parlaklikVeKontrast}
+        onChange={(e) => setParlaklikVeKontrast(e.target.checked)}/>
+    <label for="dahiletparlaklikvekontrast">video parlaklik ve kontrast ayarlama dahil et</label>
     </div>
   );
 

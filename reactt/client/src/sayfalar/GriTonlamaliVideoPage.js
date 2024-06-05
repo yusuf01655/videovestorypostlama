@@ -29,8 +29,9 @@ const GriTonlamaliVideoPage = () => {
       <h1>Videoyu Gri Tonlamali Yap</h1>
       
       
-      
-      <button onClick={handleGriTonla}>Gri tonlamayi gerceklestir</button>
+      <button onClick={handleGriTonla}>Edit Video</button>
+      <input type="checkbox" id="dahiletgritonla" name="dahiletgritonla" />
+    <label for="dahiletgritonla">video kesmeyi dahil et</label>
     </div>
   );
 

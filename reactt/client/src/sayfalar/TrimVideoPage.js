@@ -46,7 +46,11 @@ const TrimVideoPage = () => {
         />
       </label>
       <br />
-      <button onClick={handleTrim}>Trim</button>
+      <button onClick={handleTrim}>Trim</button> 
+      <div>
+    <input type="checkbox" id="dahilettrim" name="dahilettrim" />
+    <label for="onaydahilet">video kesmeyi dahil et</label>
+  </div>
     </div>
   );
 };

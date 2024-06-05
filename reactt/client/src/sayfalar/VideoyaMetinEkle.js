@@ -60,7 +60,9 @@ const OverlayTextToVideoPage = () => {
           }
         />
       </label>
-      <button onClick={handleEdit}>Metni ekle</button>
+      <input type="checkbox" id="dahiletmetinekle" name="dahiletmetinekle" />
+    <label for="dahiletmetinekle">video metin eklemeyi  dahil et</label>
+    <button onClick={handleEdit}>metni ekle</button>
     </div>
   );
 

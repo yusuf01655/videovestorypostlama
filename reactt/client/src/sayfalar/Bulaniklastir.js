@@ -63,7 +63,8 @@ const Bulaniklastir = () => {
       
       
 
-      <button onClick={handleEdit}>Bulaniklastir</button>
+      <input type="checkbox" id="dahiletbulaniklastir" name="dahiletbulaniklastir" />
+    <label for="dahiletbulaniklastir">video bulanıklaştırmayı dahil et</label><button onClick={handleEdit}>Edit Video</button>
     </div>
   );
 
