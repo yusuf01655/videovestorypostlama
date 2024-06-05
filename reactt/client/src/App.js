@@ -9,6 +9,7 @@ import Kaydol2 from './sayfalar/Kaydol2';
 import girisyap from './sayfalar/girisyap';
 import {BrowserRouter, Route} from 'react-router-dom'
 
+
 const App = () => {
   const [medias,setMedias] = useState([])
 
@@ -26,6 +27,9 @@ const App = () => {
   }
   return (
   <>
+    
+    
+    
   <p class="center large">This paragraph refers to two classes.</p>
     <div className="row">
 

@@ -10,6 +10,11 @@ import YenidenOlceklendirPage from '../sayfalar/YenidenOlceklendirPage';
 import KirpPage from '../sayfalar/KirpPage';
 import ParlaklikVeKontrastPage from '../sayfalar/ParlaklikVeKontrastPage';
 import Bulaniklastir from '../sayfalar/Bulaniklastir';
+import Header from "./Template/Header";
+import Nav from "./Template/Nav";
+import Section from "./Template/Section";
+import Aside from "./Template/Aside";
+import Footer from "./Template/Footer";
 const VideoEditPage = ({ match }) => {
     const { mediaId } = match.params;
      const [scaleVideo, setScaleVideo] = useState(false); 
@@ -22,6 +27,14 @@ const VideoEditPage = ({ match }) => {
   return (
     
     <div>
+      <Header />
+      <Nav />
+      <Section />
+     
+      <Aside />
+    
+      
+      
       <TrimVideoPage /> <br />
       <RotateVideoPage />
       <EditVideoWithStickerPage />
@@ -72,6 +85,7 @@ const VideoEditPage = ({ match }) => {
         </li>
         {/* Add more links for other editing actions */}
       </ul>
+      <Footer />
     </div>
   );
 };

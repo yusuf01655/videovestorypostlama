@@ -21,6 +21,7 @@ import YenidenOlceklendirPage from './sayfalar/YenidenOlceklendirPage';
 import KirpPage from './sayfalar/KirpPage';
 import ParlaklikVeKontrastPage from './sayfalar/ParlaklikVeKontrastPage';
 import Bulaniklastir from './sayfalar/Bulaniklastir';
+import Layout from './components/Template/Layout';
 const Appp = () => {
   
   
