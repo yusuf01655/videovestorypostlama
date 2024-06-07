@@ -8,6 +8,7 @@ import ReactPlayer from 'react-player';
 import sticker1 from '../stickerlar/sticker1.png';
 import sticker2 from '../stickerlar/sticker2.png';
 import './StickerPage.css';
+import VideoTrimTimeline2 from '../components/VideoTrimTimeline2';
 const EditVideoWithStickerPage = () => {
   const { mediaId } = useParams();
   const [stickerUrl, setStickerUrl] = useState('');
@@ -465,6 +466,7 @@ function getCurrentRotation(el) {
         className = 'video'
         
       />
+      <VideoTrimTimeline2 />
       <div 
       ref = {overlayRef} 
       className='crop-overlay' 

@@ -1,0 +1,34 @@
+.video-trimmer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    margin: auto;
+  }
+  
+  .timeline-slider {
+    width: 100%;
+    margin: 20px 0;
+  }
+  
+  .time-info {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px 0;
+  }
+  
+  .trim-button {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+  
+  .trim-button:hover {
+    background-color: #218838;
+  }
+  

@@ -1,0 +1,51 @@
+.timeline {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 0 auto;
+    padding: 20px;
+    border-left: 2px solid #ddd;
+  }
+  
+  .timeline.reversed {
+    /* Reverse the order of items visually */
+    flex-direction: column-reverse;
+  }
+  
+  .timeline-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    position: relative;
+  }
+  
+  .timeline-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #ddd;
+    text-align: center;
+    line-height: 40px;
+    color: #333;
+    margin-right: 20px;
+  }
+  
+  .timeline-content {
+    flex: 1;
+  }
+  
+  .timeline-content h3 {
+    margin: 0 0 5px;
+    font-size: 18px;
+  }
+  
+  .timeline-content p {
+    margin-bottom: 0;
+  }
+  
+  .timeline-subtitle {
+    color: #888;
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+  

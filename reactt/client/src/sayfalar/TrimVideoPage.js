@@ -3,11 +3,25 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { BACKEND_URI } from "../config/constants";
-
+import Timeline from '../components/Timeline';
+import '../components/TimelineStyle.css';
+import VideoTrimTimeline from '../components/VideoTrimTimeline';
+import VideoTrimTimeline2 from "../components/VideoTrimTimeline2";
+import VideoTrimTimeline3 from "../components/VideoTrimTimeline3";
+import Slider from "../components/Slider";
 const TrimVideoPage = () => {
   const { mediaId } = useParams();
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
+  const data = [
+    {
+      icon: <span className="material-icons">event</span>, // Replace with your icon component
+      title: 'Event 1',
+      subtitle: 'January 1st, 2024',
+      content: 'Description of the event',
+    },
+    // ... more timeline items
+  ];
 
   const handleTrim = async () => {
     try {
@@ -46,6 +60,15 @@ const TrimVideoPage = () => {
         />
       </label>
       <br />
+      <div>
+     
+      <VideoTrimTimeline2
+        
+        
+      />
+     
+     
+    </div>
       <button onClick={handleTrim}>Trim</button> 
       <div>
     <input type="checkbox" id="dahilettrim" name="dahilettrim" />
