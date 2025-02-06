@@ -1,21 +1,21 @@
-// Timeline.js
+import React, { useState, useRef, useEffect } from 'react';
 
-import React from 'react';
-import TimelineItem from './TimelineItem';
-import './TimelineStyle.css'; // Import your CSS for styling
+function Timeline() {
+  const videoRef = useRef(null);
+  const audioRef = useRef(null);
+  const overlayRef = useRef(null);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [markers, setMarkers] = useState([]);
 
-const Timeline = ({ items, reversed }) => {
+  // ... other state and functions for markers, splitting, trimming, etc.
+
   return (
-    <div className={`timeline ${reversed ? 'reversed' : ''}`}>
-      {items.map((item, index) => (
-        <TimelineItem key={index} data={item} />
-      ))}
+    <div className="timeline">
+      <video ref={videoRef} currentTime={currentTime} />
+      <audio ref={audioRef} currentTime={currentTime} />
+      <div ref={overlayRef} className="overlays">
+        {/* Render markers and other overlay elements here */}
+      </div>
     </div>
   );
-};
-
-Timeline.defaultProps = {
-  reversed: false, // Option to display timeline in reverse order
-};
-
-export default Timeline;
+}

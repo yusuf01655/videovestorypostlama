@@ -1,5 +1,5 @@
 // TrimVideoPage.js
-import React, { useState } from "react";
+import React, { useState,useRef } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { BACKEND_URI } from "../config/constants";
@@ -9,6 +9,7 @@ import VideoTrimTimeline from '../components/VideoTrimTimeline';
 import VideoTrimTimeline2 from "../components/VideoTrimTimeline2";
 import VideoTrimTimeline3 from "../components/VideoTrimTimeline3";
 import Slider from "../components/Slider";
+import ornek from "../components/ornek";
 const TrimVideoPage = () => {
   const { mediaId } = useParams();
   const [startTime, setStartTime] = useState("");
@@ -22,6 +23,13 @@ const TrimVideoPage = () => {
     },
     // ... more timeline items
   ];
+  const videoRef = useRef(null);
+  const audioRef = useRef(null);
+  const overlayRef = useRef(null);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [markers, setMarkers] = useState([]);
+
+  // ... other state and functions for markers, splitting, trimming, etc
 
   const handleTrim = async () => {
     try {
@@ -41,6 +49,13 @@ const TrimVideoPage = () => {
 
   return (
     <div>
+       <div className="timeline">
+      <video ref={videoRef} currentTime={currentTime} />
+      <audio ref={audioRef} currentTime={currentTime} />
+      <div ref={overlayRef} className="overlays">
+        {/* Render markers and other overlay elements here */}
+      </div>
+    </div>
       <h2>Trim Video</h2>
       <label>
         Start Time:
@@ -62,10 +77,7 @@ const TrimVideoPage = () => {
       <br />
       <div>
      
-      <VideoTrimTimeline2
-        
-        
-      />
+     
      
      
     </div>

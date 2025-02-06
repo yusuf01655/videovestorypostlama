@@ -9,7 +9,10 @@ import sticker1 from '../stickerlar/sticker1.png';
 import sticker2 from '../stickerlar/sticker2.png';
 import './StickerPage.css';
 import VideoTrimTimeline2 from '../components/VideoTrimTimeline2';
+import ornek from '../components/ornek';
+import * as Slider from '@radix-ui/react-slider';
 const EditVideoWithStickerPage = () => {
+
   const { mediaId } = useParams();
   const [stickerUrl, setStickerUrl] = useState('');
   const [stickerPosition, setStickerPosition] = useState({ x: 0, y: 0 });
@@ -35,6 +38,39 @@ const EditVideoWithStickerPage = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   // Add this to the top of your component
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration] = useState(300); // 5 minutes in seconds
+  const [trimRange, setTrimRange] = useState([0, duration]);
+  useEffect(() => {
+    let interval;
+    if (isPlaying) {
+      interval = setInterval(() => {
+        setCurrentTime((prev) => {
+          if (prev >= trimRange[1]) {
+            setIsPlaying(false);
+            return trimRange[0];
+          }
+          return prev + 1;
+        });
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [isPlaying, trimRange]);
+  
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = Math.floor(seconds % 60);
+    return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+  };
+  
+  const handlePlayPause = () => {
+    if (currentTime >= trimRange[1]) {
+      setCurrentTime(trimRange[0]);
+    }
+    setIsPlaying(!isPlaying);
+  };
+
   useEffect(() => {
     const boxWrapper = document.querySelector('.box-wrapper');
     const rightMid = document.getElementById("right-mid");
@@ -48,6 +84,9 @@ const rightBottom = document.getElementById("right-bottom");
 const leftBottom = document.getElementById("left-bottom");
 const rotate = document.getElementById("rotate");
 const box = document.getElementById('box');
+
+
+
 function repositionElement(x, y) {
   boxWrapper.style.left = x + 'px';
   boxWrapper.style.top = y + 'px';
@@ -410,6 +449,7 @@ function getCurrentRotation(el) {
 
 
   return (<>
+    
     <div>
       <h2>Edit Video with Sticker</h2>
 
@@ -466,7 +506,7 @@ function getCurrentRotation(el) {
         className = 'video'
         
       />
-      <VideoTrimTimeline2 />
+      
       <div 
       ref = {overlayRef} 
       className='crop-overlay' 
@@ -520,7 +560,78 @@ function getCurrentRotation(el) {
       <br /><button onClick={handleEdit}>Edit Video</button>
       <input type="checkbox" id="dahilettrim" name="dahilettrim" />
     <label for="onaydahilet">video kesmeyi dahil et</label>
-      
+    <div className="container max-w-lg p-4 bg-white rounded shadow"> {/* Bootstrap container for max-width, padding, bg-white, rounded, shadow */}
+      <div className="mb-3"> {/* Bootstrap mb-3 for margin-bottom */}
+        <div className="bg-light border border-2 border-dashed rounded w-100" style={{ height: '12rem' }} /> {/* bg-light for gray-200, border, border-dashed, rounded, w-100 for full-width, inline style for h-48 */}
+      </div>
+
+      <div className="d-grid gap-3"> {/* Bootstrap d-grid gap-3 for space-y-6 (using grid gap for vertical spacing) */}
+        <div className="d-flex align-items-center justify-content-between mb-2"> {/* Bootstrap d-flex, align-items-center, justify-content-between, mb-2 for mb-4 */}
+          <button
+            onClick={handlePlayPause}
+            className="btn btn-primary rounded" // btn-primary for blue-600/700, rounded for rounded-lg
+            style={{ transition: 'background-color 0.15s ease-in-out' }} // inline style for transition-colors
+          >
+            {isPlaying ? 'Pause' : 'Play'}
+          </button>
+          <div className="text-secondary"> {/* text-secondary for gray-600 */}
+            {formatTime(currentTime)} / {formatTime(duration)}
+          </div>
+        </div>
+
+        <div className="position-relative pt-4"> {/* position-relative for relative, pt-4 for pt-6 */}
+          <Slider.Root
+            className="position-relative d-flex align-items-center user-select-none touch-none w-100 h-5" // position-relative, d-flex, align-items-center, user-select-none, touch-none, w-100, h-5
+            value={trimRange}
+            max={duration}
+            step={1}
+            minStepsBetweenThumbs={1}
+            onValueChange={setTrimRange}
+          >
+            <Slider.Track className="bg-light position-relative flex-grow-1 rounded-pill" style={{ height: '0.5rem' }}> {/* bg-light, position-relative, flex-grow-1, rounded-pill, inline style for h-2 */}
+              <Slider.Range className="position-absolute bg-primary rounded-pill" style={{ height: '100%' }} /> {/* position-absolute, bg-primary, rounded-pill, inline style for h-full */}
+            </Slider.Track>
+            <Slider.Thumb
+              className="block rounded-circle border border-primary bg-white" // block, rounded-circle, border, border-primary, bg-white
+              style={{ width: '1.25rem', height: '1.25rem', hover: 'bg-light', focus: 'outline-none', focusRing: 'ring-2 ring-primary' }} // inline styles for w-5, h-5, hover, focus
+              aria-label="Start time"
+            />
+            <Slider.Thumb
+              className="block rounded-circle border border-primary bg-white" // block, rounded-circle, border, border-primary, bg-white
+              style={{ width: '1.25rem', height: '1.25rem', hover: 'bg-light', focus: 'outline-none', focusRing: 'ring-2 ring-primary' }} // inline styles for w-5, h-5, hover, focus
+              aria-label="End time"
+            />
+          </Slider.Root>
+
+          <div className="position-absolute top-0 start-0 end-0 d-flex justify-content-between px-2 text-body-secondary small"> {/* position-absolute, top-0, start-0, end-0, d-flex, justify-content-between, px-2, text-body-secondary, small */}
+            {Array.from({ length: 6 }).map((_, index) => (
+              <span key={index}>{formatTime((duration / 5) * index)}</span>
+            ))}
+          </div>
+        </div>
+
+        <div className="d-flex justify-content-between text-secondary small"> {/* d-flex, justify-content-between, text-secondary, small */}
+          <div>Start: {formatTime(trimRange[0])}</div>
+          <div>End: {formatTime(trimRange[1])}</div>
+        </div>
+
+        <div className="d-flex justify-content-between gap-3"> {/* d-flex, justify-content-between, gap-3 for gap-4 */}
+          <button
+            onClick={() => setTrimRange([0, duration])}
+            className="btn btn-light text-secondary rounded flex-grow-1" // btn-light for gray-200, text-secondary for gray-700, rounded, flex-grow-1 for flex-1
+            style={{ transition: 'background-color 0.15s ease-in-out' }} // inline style for transition-colors
+          >
+            Reset
+          </button>
+          <button
+            className="btn btn-success text-white rounded flex-grow-1" // btn-success for green-600/700, text-white, rounded, flex-grow-1 for flex-1
+            style={{ transition: 'background-color 0.15s ease-in-out' }} // inline style for transition-colors
+          >
+            Apply Trim
+          </button>
+        </div>
+      </div>
+    </div>
     </>);
 };
 
